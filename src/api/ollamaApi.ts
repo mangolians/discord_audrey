@@ -1,4 +1,4 @@
-import BaseApi from './baseApi';
+/*import BaseApi from './baseApi';
 import logger from '../utils/logger';
 import { Message, ApiOptions, ApiResponse, ApiClient } from '../utils/apiFactory';
 
@@ -41,4 +41,4 @@ class OllamaApi extends BaseApi {
   }
 }
 
-export default OllamaApi;
+export default OllamaApi;*/
