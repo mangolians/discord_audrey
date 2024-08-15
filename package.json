@@ -1,0 +1,25 @@
+{
+  "name": "discord_audrey",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --import tsx src/bot.ts",
+    "dev": "nodemon src/bot.ts",
+    "deploy": "node --import tsx src/utils/deploy-commands.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.25.1",
+    "@prisma/client": "^5.18.0",
+    "axios": "^1.7.3",
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.4",
+    "prisma": "^5.18.0",
+    "tsx": "^4.17.0",
+    "winston": "^3.14.1"
+  }
+}

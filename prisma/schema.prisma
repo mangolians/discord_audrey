@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Server {
+  id                  String         @id @default(uuid())
+  serverId            String         @unique
+  serverName          String
+  apiName             String
+  apiUrl              String?
+  apiKey              String
+  modelName           String
+  systemPrompt        String
+  serverContext       String
+  adminRoleId         String?
+  whitelistedChannels String
+  max_length          Int
+  max_ctx             Int
+  additional_stop_seq String
+  temperature         Float
+  top_k               Int
+  top_p               Float
+  typical_p           Float
+  repetition_penalty  Float
+  presence_penalty    Float
+  frequency_penalty   Float
+  dynamic_temp        Boolean
+  dyn_temp_min        Float
+  dyn_temp_max        Float
+  dyn_temp_exponent   Float
+  mirostat            Int
+  tau                 Float
+  eta                 Float
+  conversations       Conversation[]
+}
+
+model Conversation {
+  id               String         @id @default(uuid())
+  serverId         String
+  server           Server         @relation(fields: [serverId], references: [id])
+  parentId         String?
+  parent           Conversation?  @relation("ConversationTree", fields: [parentId], references: [id])
+  children         Conversation[] @relation("ConversationTree")
+  messages         Message[]
+  lastMessageTime  DateTime       @default(now())
+  channelId        String
+}
+
+model Message {
+  id               String       @id @default(uuid())
+  conversationId   String
+  conversation     Conversation @relation(fields: [conversationId], references: [id])
+  from             String       // "human" or "assistant"
+  username         String
+  discordAuthorId  String?
+  content          String
+  createdAt        DateTime     @default(now())
+  discordMessageId String       @unique
+}
