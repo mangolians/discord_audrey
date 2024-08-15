@@ -2,6 +2,8 @@
 
 # DOCS NOT UP TO DATE
 
+## Additional: The bot purely exists with the main idea of using my own trained model "Audrey" to interact with discord etc. hence why elements like Audrey's prompt or prompt templates are hardcoded.
+
 Audrey is a versatile Discord bot that integrates with multiple AI APIs to provide intelligent conversation and assistance in your Discord server. It supports OpenAI, Anthropic's Claude, Ollama, and KoboldCpp APIs, allowing for flexible and powerful AI interactions.
 
 ## Features
