@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import { Message, ApiOptions, ApiResponse, ApiClient } from '../utils/apiFactory';
+import { Message, ApiOptions, ApiResponse, ApiClient } from '../types';
 
 interface OpenAIMessage {
   role: 'system' | 'user' | 'assistant';

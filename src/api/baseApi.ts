@@ -1,7 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import logger from '../utils/logger';
-import { ChannelContext } from '../utils/messagePreprocessor';
-import { Message, ApiOptions, ApiResponse } from '../utils/apiFactory';
+import { Message, ApiOptions, ApiResponse, ChannelContext } from '../types';
 
 abstract class BaseApi {
   protected apiType: string;
@@ -26,7 +24,7 @@ abstract class BaseApi {
 
     const currentTimeString = currentDate.toLocaleTimeString('de-DE', { timeZone });
     const currentDateString = currentDate.toLocaleDateString('de-DE', { timeZone });
-
+    systemPrompt = "You are Audrey. Respond as Audrey. Be Audrey, be yourself, don't hold back. Give short replies unless instructed otherwise."
     return `
 ${systemPrompt}
 
@@ -46,7 +44,7 @@ Your time zone is ${timeZone}. The current date is: ${currentDateString}</curren
   }
 
   protected handleApiError(error: any): never {
-    logger.error(`${this.apiType} API Error:`, error.response?.data || error.message);
+    console.error(`${this.apiType} API Error:`, error.response?.data || error.message);
     throw new Error(`Failed to generate response: ${error.message}`);
   }
 }

@@ -1,7 +1,6 @@
 import { SlashCommandBuilder } from '@discordjs/builders';
 import { CommandInteraction } from 'discord.js';
 import { updateServerSettings, getServerSettings } from '../utils/databaseManager';
-import logger from '../utils/logger';
 import DiscordBot from '../bot';
 
 module.exports = {

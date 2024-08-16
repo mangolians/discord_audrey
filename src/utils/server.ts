@@ -1,40 +1,9 @@
 import { updateServerSettings } from './databaseManager';
 import ApiFactory from './apiFactory';
 import config from '../config';
-import { Message, ApiOptions, ApiResponse, ApiClient } from './apiFactory';
-import { ChannelContext } from './messagePreprocessor';
-export interface ServerSettings {
-  id: string;
-  serverId: string;
-  serverName: string;
-  apiName: string;
-  apiUrl: string | null;
-  apiKey: string;
-  modelName: string;
-  systemPrompt: string;
-  serverContext: string;
-  adminRoleId: string | null;
-  whitelistedChannels: string;
-  max_length: number;
-  max_ctx: number;
-  additional_stop_seq: string;
-  temperature: number;
-  top_k: number;
-  top_p: number;
-  typical_p: number;
-  repetition_penalty: number;
-  presence_penalty: number;
-  frequency_penalty: number;
-  dynamic_temp: boolean;
-  dyn_temp_min: number;
-  dyn_temp_max: number;
-  dyn_temp_exponent: number;
-  mirostat: number;
-  tau: number;
-  eta: number;
-}
+import { Message, ApiOptions, ApiResponse, ApiClient, ChannelContext, DbServerSettings } from '../types';
 
-class Server implements ServerSettings {
+class Server implements DbServerSettings {
   id: string;
   serverId: string;
   serverName: string;
@@ -66,12 +35,12 @@ class Server implements ServerSettings {
 
   apiClient: ApiClient;
 
-  constructor(serverData: Partial<ServerSettings>) {
+  constructor(serverData: Partial<DbServerSettings>) {
     Object.assign(this, config.DEFAULT_SERVER_SETTINGS, serverData);
     this.apiClient = ApiFactory.createApi(this.apiName, this.apiUrl || '', this.apiKey || '');
   }
 
-  async updateSettings(newSettings: Partial<ServerSettings>): Promise<void> {
+  async updateSettings(newSettings: Partial<DbServerSettings>): Promise<void> {
     const updatedData = await updateServerSettings(this.serverId, newSettings);
     Object.assign(this, updatedData);
 

@@ -2,10 +2,8 @@ import { SlashCommandBuilder } from '@discordjs/builders';
 import { ChannelType, CommandInteraction } from 'discord.js';
 import { getServerSettings, handleNewMessage, handleAiResponse } from '../utils/databaseManager';
 import Server from '../utils/server';
-import logger from '../utils/logger';
 import DiscordBot from '../bot';
-import { Message } from '../utils/apiFactory';
-import { ChannelContext } from '../utils/messagePreprocessor';
+import { Message, ChannelContext } from '../types';
 
 module.exports = {
   data: new SlashCommandBuilder()

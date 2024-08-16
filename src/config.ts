@@ -1,48 +1,6 @@
 import dotenv from 'dotenv';
-
+import { Config } from './types';
 dotenv.config();
-
-interface ServerSettings {
-  apiName: string;
-  modelName: string;
-  systemPrompt: string;
-  serverContext: string;
-  apiKey: string;
-  settings: {
-    max_length: number;
-    max_ctx: number;
-    additional_stop_seq: string;
-    temperature: number;
-    top_k: number;
-    top_p: number;
-    typical_p: number;
-    repetition_penalty: number;
-    presence_penalty: number;
-    frequency_penalty: number;
-    dynamic_temp: boolean;
-    dyn_temp_min: number;
-    dyn_temp_max: number;
-    dyn_temp_exponent: number;
-    mirostat: number;
-    tau: number;
-    eta: number;
-  };
-}
-
-interface Config {
-  DISCORD_TOKEN: string;
-  CLIENT_ID: string;
-  DEVELOPER_ID: string;
-  DEFAULT_API: string;
-  DEFAULT_MODEL: string;
-  KOBOLDCPP_API_URL: string;
-  OLLAMA_API_URL: string;
-  ANTHROPIC_API_KEY: string;
-  DEFAULT_SERVER_SETTINGS: ServerSettings;
-  LOG_LEVEL: string;
-  DATABASE_URL: string;
-  FLUSH_COMMANDS: boolean;
-}
 
 const config: Config = {
   DISCORD_TOKEN: process.env.DISCORD_TOKEN || '',
@@ -60,9 +18,9 @@ const config: Config = {
     serverContext: "",
     apiKey: "",
     settings: {
-      max_length: 768,
+      max_length: 600,
       max_ctx: 12288,
-      additional_stop_seq: "Audrey:",
+      additional_stop_seq: "",
       temperature: 0.9,
       top_k: 40,
       top_p: 0.9,

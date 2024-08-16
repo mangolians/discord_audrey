@@ -1,7 +1,5 @@
 import BaseApi from './baseApi';
-import { Message, ApiOptions, ApiResponse } from '../utils/apiFactory';
-import logger from '../utils/logger';
-import { ChannelContext } from '../utils/messagePreprocessor';
+import { Message, ApiOptions, ApiResponse, ChannelContext } from '../types';
 
 class KoboldCppApi extends BaseApi {
   constructor(baseUrl: string, apiKey: string = '') {

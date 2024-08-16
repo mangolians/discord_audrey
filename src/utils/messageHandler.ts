@@ -1,10 +1,9 @@
 import { Message as DiscordMessage } from 'discord.js';
 import { handleNewMessage, handleAiResponse, getConversationContext } from './databaseManager';
 import Server from './server';
-import logger from './logger';
 import DiscordBot from '../bot';
-import { ChannelContext } from './messagePreprocessor';
-import { Message } from './apiFactory';
+import { ChannelContext, Message } from '../types';
+import config from '../config';
 
 class MessageHandler {
   private bot: DiscordBot;
@@ -21,12 +20,12 @@ class MessageHandler {
 
     const server = await this.bot.serverManager.getServer(message.guild.id);
     if (!server) {
-      logger.warn(`Server not found in database: ${message.guild.name} (${message.guild.id})`);
+      console.warn(`Server not found in database: ${message.guild.name} (${message.guild.id})`);
       await this.bot.serverManager.addNewServer(message.guild.id, message.guild.name);
       return; // Skip processing this message, but the server will be added for future messages
     }
 
-    if (!server.isChannelWhitelisted(message.channel.id)) return;
+    if (!server.isChannelWhitelisted(message.channel.id) && message.author.id !== config.DEVELOPER_ID) return;
 
     if (message.reference) {
       await this.handleReply(message, server);
@@ -68,7 +67,7 @@ class MessageHandler {
         message.id
       );
     } catch (error) {
-      logger.error(`Error generating response: ${error}`);
+      console.error(`Error generating response: ${error}`);
       await message.reply("I'm sorry, but I encountered an error while processing your request.");
     }
   }
@@ -115,7 +114,7 @@ class MessageHandler {
         message.id
       );
     } catch (error) {
-      logger.error(`Error handling reply: ${error}`);
+      console.error(`Error handling reply: ${error}`);
       await message.reply("I'm sorry, but I encountered an error while processing your reply.");
     }
   }

@@ -1,5 +1,5 @@
 import { PrismaClient, Server as PrismaServer, Message as PrismaMessage, Conversation } from '@prisma/client';
-import { Message } from './apiFactory';
+import { Message } from '../types';
 import { Client, Guild, Snowflake } from 'discord.js';
 
 const prisma = new PrismaClient();

@@ -1,14 +1,8 @@
 import { Collection, CommandInteraction } from 'discord.js';
 import fs from 'fs';
 import path from 'path';
-import logger from './logger';
 import DiscordBot from '../bot';
-import { SlashCommandBuilder } from '@discordjs/builders';
-
-interface Command {
-  data: SlashCommandBuilder;
-  execute: (interaction: CommandInteraction, bot: DiscordBot) => Promise<void>;
-}
+import { Command } from '../types';
 
 class CommandHandler {
   private bot: DiscordBot;

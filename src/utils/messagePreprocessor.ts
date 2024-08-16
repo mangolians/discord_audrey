@@ -1,13 +1,6 @@
-import { Message } from './apiFactory';
+import { Message, ChannelContext } from '../types';
 
-export interface ChannelContext {
-  channelName: string;
-  serverName: string;
-  serverContext: string;
-  currentDate: Date;
-  timeZone: string;
-  senderUsername: string;
-}
+
 
 function preprocessSystemMessage(peronaSystemMessage: string, databaseHistory: Message[], channelContext: ChannelContext): string {
   const {

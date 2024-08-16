@@ -1,7 +1,7 @@
 import { getServerSettings, updateServerSettings } from './databaseManager';
 import Server from './server';
-import { ServerSettings } from './server';
 import config from '../config';
+import { DbServerSettings } from '../types';
 
 class ServerManager {
   private servers: Map<string, Server>;
@@ -23,7 +23,7 @@ class ServerManager {
     return this.servers.get(serverId) || null;
   }
 
-  async updateServerSettings(serverId: string, settings: Partial<ServerSettings>): Promise<void> {
+  async updateServerSettings(serverId: string, settings: Partial<DbServerSettings>): Promise<void> {
     const server = await this.getServer(serverId);
     if (server) {
       await server.updateSettings(settings);
@@ -34,7 +34,7 @@ class ServerManager {
   async addNewServer(serverId: string, serverName: string): Promise<void> {
     const existingServer = await this.getServer(serverId);
     if (!existingServer) {
-      const newServerSettings: Partial<ServerSettings> = {
+      const newServerSettings: Partial<DbServerSettings> = {
         serverId,
         serverName,
         apiName: config.DEFAULT_SERVER_SETTINGS.apiName,

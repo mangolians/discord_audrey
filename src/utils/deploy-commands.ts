@@ -1,5 +1,3 @@
-import logger from "./logger"
-
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const fs = require('fs');
