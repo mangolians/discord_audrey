@@ -12,8 +12,8 @@ model Server {
   serverId            String         @unique
   serverName          String
   apiName             String
-  apiUrl              String?
-  apiKey              String
+  apiUrl              String
+  apiKey              String         @default("")
   modelName           String
   systemPrompt        String
   serverContext       String

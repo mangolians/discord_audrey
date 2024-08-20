@@ -38,27 +38,28 @@ export interface ApiClient {
 interface ServerSettings {
     apiName: string;
     modelName: string;
+    apiUrl: string;
     systemPrompt: string;
     serverContext: string;
     apiKey: string;
     settings: {
       max_length: number;
       max_ctx: number;
-      additional_stop_seq: string;
+      additional_stop_seq: string | null;
       temperature: number;
-      top_k: number;
-      top_p: number;
-      typical_p: number;
-      repetition_penalty: number;
-      presence_penalty: number;
-      frequency_penalty: number;
-      dynamic_temp: boolean;
-      dyn_temp_min: number;
-      dyn_temp_max: number;
-      dyn_temp_exponent: number;
-      mirostat: number;
-      tau: number;
-      eta: number;
+      top_k: number | null;
+      top_p: number | null;
+      typical_p: number | null;
+      repetition_penalty: number | null;
+      presence_penalty: number | null;
+      frequency_penalty: number | null;
+      dynamic_temp: boolean | null;
+      dyn_temp_min: number | null;
+      dyn_temp_max: number | null;
+      dyn_temp_exponent: number | null;
+      mirostat: number | null;
+      tau: number | null;
+      eta: number | null;
     };
   }
   
@@ -66,11 +67,6 @@ interface ServerSettings {
     DISCORD_TOKEN: string;
     CLIENT_ID: string;
     DEVELOPER_ID: string;
-    DEFAULT_API: string;
-    DEFAULT_MODEL: string;
-    KOBOLDCPP_API_URL: string;
-    OLLAMA_API_URL: string;
-    ANTHROPIC_API_KEY: string;
     DEFAULT_SERVER_SETTINGS: ServerSettings;
     LOG_LEVEL: string;
     DATABASE_URL: string;
