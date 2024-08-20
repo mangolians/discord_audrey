@@ -22,6 +22,9 @@ export async function updateServerSettings(serverId: string, settings: Partial<P
       systemPrompt: settings.systemPrompt || '',
       serverContext: settings.serverContext || '',
       whitelistedChannels: settings.whitelistedChannels || '',
+      max_length: settings.max_length || 512,
+      max_ctx: settings.max_ctx || 12288,
+      temperature: settings.temperature  || 0.9
     },
   });
 }
@@ -124,7 +127,8 @@ export async function getConversationContext(messageId: string): Promise<Message
   });
 
   if (!message) {
-    throw new Error(`Message not found: ${messageId}`);
+    return []
+    //throw new Error(`Message not found: ${messageId}`);
   }
 
   const conversationMessages = await prisma.message.findMany({

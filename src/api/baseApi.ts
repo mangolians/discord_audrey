@@ -24,7 +24,7 @@ abstract class BaseApi {
 
     const currentTimeString = currentDate.toLocaleTimeString('de-DE', { timeZone });
     const currentDateString = currentDate.toLocaleDateString('de-DE', { timeZone });
-    systemPrompt = "You are Audrey. Respond as Audrey. Be Audrey, be yourself, don't hold back. Give short replies unless instructed otherwise."
+    //systemPrompt = "You are Audrey. Respond as Audrey. Be Audrey, be yourself, don't hold back. Give short replies unless instructed otherwise."
     return `
 ${systemPrompt}
 

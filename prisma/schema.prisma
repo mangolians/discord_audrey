@@ -21,21 +21,21 @@ model Server {
   whitelistedChannels String
   max_length          Int
   max_ctx             Int
-  additional_stop_seq String
+  additional_stop_seq String?
   temperature         Float
-  top_k               Int
-  top_p               Float
-  typical_p           Float
-  repetition_penalty  Float
-  presence_penalty    Float
-  frequency_penalty   Float
-  dynamic_temp        Boolean
-  dyn_temp_min        Float
-  dyn_temp_max        Float
-  dyn_temp_exponent   Float
-  mirostat            Int
-  tau                 Float
-  eta                 Float
+  top_k               Int?
+  top_p               Float?
+  typical_p           Float?
+  repetition_penalty  Float?
+  presence_penalty    Float?
+  frequency_penalty   Float?
+  dynamic_temp        Boolean?
+  dyn_temp_min        Float?
+  dyn_temp_max        Float?
+  dyn_temp_exponent   Float?
+  mirostat            Int?
+  tau                 Float?
+  eta                 Float?
   conversations       Conversation[]
 }
 

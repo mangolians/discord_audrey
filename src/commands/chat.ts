@@ -29,6 +29,7 @@ module.exports = {
 
     if(!server.isChannelWhitelisted(interaction.channel.id)) {
       await interaction.reply({ content: 'This channel is not whitelisted you muppet.', ephemeral: true });
+      return;
     }
     
     const prompt = interaction.options.get('message')?.value as string;

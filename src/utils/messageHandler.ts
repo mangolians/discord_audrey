@@ -29,7 +29,7 @@ class MessageHandler {
 
     if (message.reference) {
       await this.handleReply(message, server);
-    } else if (message.content.startsWith('/chat') || message.mentions.has(this.bot.client.user?.id || '')) {
+    } else if (message.cleanContent.startsWith('/chat') || message.mentions.has(this.bot.client.user?.id || '')) {
       await this.handleNewConversation(message, server);
     } 
   }
@@ -37,14 +37,19 @@ class MessageHandler {
   private async handleNewConversation(message: DiscordMessage, server: Server): Promise<void> {
     if(message.channel.isDMBased()) return;
 
-    const prompt = message.content.startsWith('/chat') 
-      ? message.content.slice(5).trim()
-      : message.content.trim();
+    let prompt = message.cleanContent.startsWith('/chat') 
+      ? message.cleanContent.slice(5).trim()
+      : message.cleanContent.trim();
     
     if (prompt.length === 0) {
       await message.reply('Please provide a message after mentioning me or using the /chat command.');
       return;
     }
+
+    prompt = prompt
+    .replace(/^@Audrey\s*,?\s*/i, 'Audrey, ') // Replace @Audrey at the start with Audrey,
+    .replace(/(\s|^)@Audrey\s*/gi, '$1Audrey ') // Replace @Audrey elsewhere with Audrey
+    .trim();
 
     try {
       const newMessage = await handleNewMessage(
@@ -57,9 +62,16 @@ class MessageHandler {
         message.channel.id,
       );
 
+
+      
       const channelContext = await this.getChannelContext(message, server);
       const response = await server.generateResponse([newMessage], channelContext);
-      const botMessage = await message.reply(response.content);
+      const MAX_LENGTH = 1997; // 2000 - 3 for the ellipsis
+      let truncatedContent = response.content.slice(0, MAX_LENGTH);
+      if (response.content.length > MAX_LENGTH) {
+        truncatedContent += '...';
+      }
+      const botMessage = await message.reply(truncatedContent);
       await handleAiResponse(
         server.id,
         botMessage.id,
@@ -90,13 +102,23 @@ class MessageHandler {
 
       const conversationHistory = await getConversationContext(message.reference.messageId);
       
+      if(conversationHistory.length == 0) {
+        await this.handleNewConversation(message, server)
+        return;
+      }
+
+      const msg = message.cleanContent
+      .replace(/^@Audrey\s*,?\s*/i, 'Audrey, ') // Replace @Audrey at the start with Audrey,
+      .replace(/(\s|^)@Audrey\s*/gi, '$1Audrey ') // Replace @Audrey elsewhere with Audrey
+      .trim();
+
       const newMessage = await handleNewMessage(
         message.client,
         server.id,
         message.author.id,
         message.author.username,
         message.id,
-        message.content,
+        msg,
         message.channel.id,
         message.reference.messageId
       );
@@ -105,7 +127,6 @@ class MessageHandler {
 
       const channelContext = await this.getChannelContext(message, server);
       const response = await server.generateResponse(conversationHistory, channelContext);
-
       const botMessage = await message.reply(response.content);
       await handleAiResponse(
         server.id,

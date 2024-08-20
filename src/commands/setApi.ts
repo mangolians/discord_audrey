@@ -12,7 +12,7 @@ module.exports = {
         .setDescription('The API to use (ollama, koboldcpp, openai)')
         .setRequired(true)
         .addChoices(
-          { name: 'Ollama', value: 'ollama' },
+          { name: 'KoboldCppChatApi', value: 'koboldcppchatapi' },
           { name: 'KoboldCpp', value: 'koboldcpp' },
           { name: 'OpenAI', value: 'openai' },
         ))
